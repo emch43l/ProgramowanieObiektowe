@@ -83,9 +83,13 @@ namespace lab_1_zadanieDomowe
         /// </summary>
         /// <param name="value">integer total value</param>
         /// <returns>Table of coin objects</returns>
+        /// <exception cref="ArgumentException">throw for argument less than 0</exception>
 
         public static Coin[] Of(int value)
         {
+            if (value < 0)
+                throw new ArgumentException("Given value cannot be lower than 0");
+
             List<Coin> coinList = new List<Coin>();
 
             while(value >= 0)
