@@ -73,6 +73,12 @@ namespace lab_1_zadanieDomowe_2
             return (float)length * width;
         }
 
+        /// <summary>
+        /// Cut Beam to one or more beams
+        /// </summary>
+        /// <param name="beamLength">Length of beams that will be cut</param>
+        /// <returns>An array of beams</returns>
+
         public Beam[] cutToBeams(float beamLength)
         {
             List<Beam> beams = new List<Beam>();
