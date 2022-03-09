@@ -13,6 +13,12 @@ namespace lab_1
             Console.WriteLine(result.Value);
             money = Money.Of(5, money.Currency) + Money.Of(10, money.Currency);
             Console.WriteLine(money.Value);
+
+            decimal price = money;
+            double cost = (double) money;
+            float c = (float) money;
+
+            Console.WriteLine(money.Equals(Money.Of(12, Currency.PLN)));
         }
     }
 
@@ -55,6 +61,11 @@ namespace lab_1
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return $"Name: {firstName}";
+        }
     }
     public enum Currency
     {
@@ -63,7 +74,7 @@ namespace lab_1
         EUR = 3
     }
 
-    public class Money 
+    public class Money : IEquatable<Money>
     {
         private readonly decimal _value;
 
@@ -134,6 +145,40 @@ namespace lab_1
                 throw new ArgumentException("Different currencies!");
         }
 
+        // jawne
 
+        public static implicit operator decimal(Money money)
+        {
+            return money.Value;
+        }
+
+        // niejawne
+
+        public static explicit operator double(Money money)
+        {
+            return (double)money.Value;
+        }
+
+        public override string ToString()
+        {
+            return $"Value: {_value}, Currency: {_currency}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Money);
+        }
+
+        public bool Equals(Money other)
+        {
+            return other != null &&
+                   _value == other._value &&
+                   _currency == other._currency;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_value, _currency);
+        }
     }
 }
