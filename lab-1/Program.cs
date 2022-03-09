@@ -9,8 +9,10 @@ namespace lab_1
             Person person = Person.OfName("Adam");
             Console.WriteLine(person.FirstName);
             Money money = Money.Of(12, Currency.PLN) ?? Money.Of(0, Currency.PLN);
-            Money result = money * 0.22m;
+            Money result = 0.22m * money;
             Console.WriteLine(result.Value);
+            money = Money.Of(5, money.Currency) + Money.Of(10, money.Currency);
+            Console.WriteLine(money.Value);
         }
     }
 
@@ -103,6 +105,35 @@ namespace lab_1
         {
             return Money.Of(money.Value * factor, money.Currency);
         }
+
+        public static Money operator *(decimal factor, Money money)
+        {
+            return Money.Of(money.Value * factor, money.Currency);
+        }
+
+        public static Money operator +(Money a, Money b)
+        {
+            IsSameCurrency(a, b);
+            return Money.Of(a.Value + b.Value, a.Currency);
+        }
+
+        public static bool operator >(Money a, Money b)
+        {
+            IsSameCurrency(a, b);
+            return a.Value > b.Value;
+        }
+
+        public static bool operator <(Money a, Money b)
+        {
+            IsSameCurrency(a, b);
+            return a.Value < b.Value;
+        }
+        private static void IsSameCurrency(Money a, Money b)
+        {
+            if (a.Currency != b.Currency)
+                throw new ArgumentException("Different currencies!");
+        }
+
 
     }
 }
