@@ -14,11 +14,30 @@ namespace lab_1
             money = Money.Of(5, money.Currency) + Money.Of(10, money.Currency);
             Console.WriteLine(money.Value);
 
-            decimal price = money;
+            //decimal price = money;
             double cost = (double) money;
             float c = (float) money;
 
             Console.WriteLine(money.Equals(Money.Of(12, Currency.PLN)));
+
+            IEquatable<Money> ie = money;
+
+            Money[] prices =
+            {
+                Money.Of(52, Currency.USD),
+                Money.Of(100, Currency.PLN),
+                Money.Of(51, Currency.EUR),
+                Money.Of(30, Currency.EUR),
+                Money.Of(99, Currency.PLN),
+                Money.Of(45, Currency.USD)
+            };
+
+            Array.Sort(prices);
+
+            foreach(var p in prices)
+            {
+                Console.WriteLine(p);
+            }
         }
     }
 
@@ -74,7 +93,7 @@ namespace lab_1
         EUR = 3
     }
 
-    public class Money : IEquatable<Money>
+    public class Money : IEquatable<Money>, IComparable<Money>
     {
         private readonly decimal _value;
 
@@ -147,10 +166,10 @@ namespace lab_1
 
         // jawne
 
-        public static implicit operator decimal(Money money)
-        {
-            return money.Value;
-        }
+        //public static implicit operator decimal(Money money)
+        //{
+        //    return money.Value;
+        //}
 
         // niejawne
 
@@ -179,6 +198,15 @@ namespace lab_1
         public override int GetHashCode()
         {
             return HashCode.Combine(_value, _currency);
+        }
+
+        public int CompareTo(Money other)
+        {
+            int curResult = _currency.CompareTo(other._currency);
+            if (curResult == 0)
+                return -_value.CompareTo(other._value);
+            else
+                return curResult;
         }
     }
 }
