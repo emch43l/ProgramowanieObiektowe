@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace lab_1
 {
     class Program
@@ -53,6 +54,33 @@ namespace lab_1
             Console.WriteLine(tank2);
             Console.WriteLine(tank1);
 
+            Student[] students =
+            {
+                new Student("Adam","Achmed",1),
+                new Student("Ceclila","Robertsoned",4),
+                new Student("Adam","Robertsoned",2),
+                new Student("Havier","Achmed",4),
+                new Student("Michael","Robertson",3),
+                new Student("Ewa","Robertson",3),
+                new Student("Ewa","Robertson",2),
+                new Student("Adam","Bigego",1),
+                new Student("Adam","Robertsoned",3),
+                new Student("Havier","Robertson",5),
+                new Student("Michael","Bigego",4),
+                new Student("Ciri","Robertson",2)
+            };
+
+            Array.Sort(students);
+
+            foreach(var student in students)
+            {
+                Console.WriteLine(student);
+            }
+
+            Money moneyPLN = Money.Of(100, Currency.PLN);
+            Money moneyUSD = moneyPLN.ToCurrency(Currency.USD, 4.1m);
+            Console.WriteLine(moneyUSD);
+            Console.WriteLine(moneyPLN);
 
         }
     }
@@ -62,6 +90,13 @@ namespace lab_1
         public string Nazwisko { get; set; }
         public string Imie { get; set; }
         public decimal Srednia { get; set; }
+
+        public Student(string imie, string nazwisko, decimal srednia)
+        {
+            Nazwisko = nazwisko;
+            Imie = imie;
+            Srednia = srednia;
+        }
 
         public int CompareTo(Student other)
         {
@@ -76,6 +111,11 @@ namespace lab_1
             }
             else
                 return curSurname;
+        }
+
+        public override string ToString()
+        {
+            return $"Student: {Imie} {Nazwisko} {Srednia}";
         }
     }
 
@@ -115,8 +155,6 @@ namespace lab_1
             }
             return false;
         }
-
-
 
         public bool refuel(int amount)
         {
@@ -226,6 +264,22 @@ namespace lab_1
         PLN = 1,
         USD = 2,
         EUR = 3
+    }
+
+    public static class MoneyExtension
+    {
+        public static Money Percent(this Money money, decimal percent)
+        {
+            return Money.Of((money.Value * percent) / 100m, money.Currency) ?? throw new
+            ArgumentException();
+        }
+
+        public static Money ToCurrency(this Money money, Currency currency, decimal exchange)
+        {
+            if (money.Currency == currency)
+                return money;
+            return Money.Of(money.Value * exchange, currency) ?? throw new ArgumentException();
+        }
     }
 
     public class Money : IEquatable<Money>, IComparable<Money>
