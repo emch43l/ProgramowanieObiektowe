@@ -78,7 +78,7 @@ namespace lab_1
             }
 
             Money moneyPLN = Money.Of(100, Currency.PLN);
-            Money moneyUSD = moneyPLN.ToCurrency(Currency.USD, 4.1m);
+            Money moneyUSD = moneyPLN.ToCurrency(Currency.USD, 0.23m);
             Console.WriteLine(moneyUSD);
             Console.WriteLine(moneyPLN);
 
@@ -278,7 +278,7 @@ namespace lab_1
         {
             if (money.Currency == currency)
                 return money;
-            return Money.Of(money.Value * exchange, currency) ?? throw new ArgumentException();
+            return Money.Of(Math.Round(money.Value / exchange,2), currency) ?? throw new ArgumentException();
         }
     }
 
