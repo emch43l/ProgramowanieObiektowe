@@ -6,6 +6,10 @@ namespace lab_4
     {
         static void Main(string[] args)
         {
+
+            // ZAD ZROBIĆ ABSTRAKCYJNĄ KLASĘ SCOOTER (str 4)
+            // ZAD ĆW 1,2 zrobic klasy na podstawie diagramu nr. 2
+
             Product[] shop = new Product[4];
             shop[0] = new Computer() { Price = 2000m, Vat = 23, };
             shop[1] = new Paint() { PriceUnit = 12, Capacity = 5, Vat = 8 };
@@ -34,6 +38,19 @@ namespace lab_4
             Console.WriteLine(numOfComputers);
             Console.WriteLine(sumVat);
 
+            IFly[] flyingObject = new IFly[2];
+            Duck duck = new Duck();
+            flyingObject[0] = duck;
+            flyingObject[1] = new Hydroplane();
+            ISwim[] swimmingObjects = new ISwim[2];
+            swimmingObjects[0] = (ISwim)flyingObject[0];
+
+            IAggregate aggregate;
+            IIterator iterator = aggregate.CreateIterator();
+            while(iterator.HasNext())
+            {
+                Console.WriteLine(iterator.GetNext());
+            }
         }
     }
 
@@ -96,4 +113,53 @@ namespace lab_4
             }
         }
     }
+
+    interface IFly
+    {
+        void Fly();
+    }
+
+    interface ISwim
+    {
+        void Swim();
+    }
+
+    class Hydroplane : IFly, ISwim
+    {
+        public void Fly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Swim()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class Duck : ISwim, IFly
+    {
+        public void Fly()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Swim()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    interface IAggregate
+    {
+        IIterator CreateIterator();
+    }
+
+    interface IIterator
+    {
+        bool HasNext();
+        int GetNext();
+
+    }
+
 }
