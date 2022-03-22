@@ -81,7 +81,6 @@ namespace lab_1
             Money moneyUSD = moneyPLN.ToCurrency(Currency.USD, 0.23m);
             Console.WriteLine(moneyUSD);
             Console.WriteLine(moneyPLN);
-
         }
     }
 

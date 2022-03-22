@@ -45,12 +45,136 @@ namespace lab_4
             ISwim[] swimmingObjects = new ISwim[2];
             swimmingObjects[0] = (ISwim)flyingObject[0];
 
-            IAggregate aggregate;
-            IIterator iterator = aggregate.CreateIterator();
-            while(iterator.HasNext())
+        }
+    }
+
+    public abstract class Vehicle
+    {
+        public double Weight { get; init; }
+        public int MaxSpeed { get; init; }
+        protected int _mileage;
+        public int Mealeage
+        {
+            get { return _mileage; }
+        }
+        public abstract decimal Drive(int distance);
+        public override string ToString()
+        {
+            return $"Vehicle{{ Weight: {Weight}, MaxSpeed: {MaxSpeed}, Mileage: {_mileage} }}";
+        }
+    }
+
+    interface Aggregate
+    {
+        public Aggregate createIterator();
+    }
+
+    interface Iterator
+    {
+        public bool hasNext();
+        public int getNext();
+        public int getFirst();
+    }
+
+    class ConcreteAggregate : Aggregate
+    {
+        public ConcreteAggregate(ConcreteAggregate variable)
+        {
+
+        }
+        public Aggregate createIterator()
+        {
+            return new ConcreteAggregate(this);
+        }
+    }
+
+    class ConcreteIterator : Iterator
+    {
+        public int getFirst()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool hasNext()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class Client : Iterator, Aggregate
+    {
+        public Aggregate createIterator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getFirst()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool hasNext()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public abstract class Scooter : Vehicle
+    {
+
+    }
+
+    public class KickScooter : Scooter
+    {
+        public override decimal Drive(int distance)
+        {
+            return (decimal)distance;
+        }
+    }
+
+    public class ElectricScooter : Scooter
+    {
+        private int _MaxRange;
+        public int MaxRange
+        {
+            get 
             {
-                Console.WriteLine(iterator.GetNext());
+                return _MaxRange;
             }
+            set 
+            {
+                _MaxRange = value;
+            }
+        
+        }
+
+        private int _BatteriesLevel;
+        public string BatteriesLevel
+        {
+            get { return _BatteriesLevel + "%"; }
+        }
+        public void ChargeBatteries()
+        {
+            _BatteriesLevel = 100;
+        }
+        public override decimal Drive(int distance)
+        {
+            double battDistance = 100 / _MaxRange;
+            if (Math.Round(distance * battDistance,0) > _BatteriesLevel)
+                return -1;
+            _mileage += distance;
+            _BatteriesLevel -= (int)Math.Round(distance * battDistance,0);
+            return (decimal)(distance / (double)MaxSpeed);
         }
     }
 
