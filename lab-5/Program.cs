@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace lab_5
 {
@@ -12,7 +13,7 @@ namespace lab_5
         Niedostateczny = 20
     }
 
-    public record Student(string Name, int Points, char Group);
+    //public record Student(string Name, int Points, char Group);
     //class Program
     //{
     //    static void Main(string[] args)
@@ -124,8 +125,36 @@ namespace lab_5
         {
             (int, int) point1 = (2, 4);
             Direction4 dir = Direction4.UP;
-            var point2 = Exercise1.NextPoint(dir, point1,(2,4));
+            var point2 = Exercise1.NextPoint(dir, point1, (2, 4));
             Console.WriteLine(point2);
+
+            Student[] students = {
+              new Student("Kowal","Adam", 'A'),
+              new Student("Nowak","Ewa", 'A'),
+              new Student("Nowak","Karol",'B')
+            };
+            Exercise4.AssignStudentId(students);
+
+            int[,] screen =
+            {
+                {0, 0, 0},
+                {0, 0, 0},
+                {0, 0, 1}
+            };
+
+            (int, int) point = (0, 0);
+
+            Console.WriteLine(Exercise2.DirectionTo(screen, point, 1));
+
+            Car[] cars = new Car[]
+            {
+                new Car(),
+                new Car(Model: "Fiat", true),
+                new Car(),
+                new Car(Model: "Fiat", true),
+                new Car(Power: 125),
+            };
+            Console.WriteLine(Exercise3.CarCounter(cars));
         }
     }
 
@@ -199,10 +228,10 @@ namespace lab_5
     {
         static int[,] screen =
         {
-        {1, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    };
+            {1, 0, 0},
+            {0, 0, 0},
+            {0, 0, 0}
+        };
 
         private static (int, int) point = (1, 1);
 
@@ -210,7 +239,29 @@ namespace lab_5
 
         public static Direction8 DirectionTo(int[,] screen, (int, int) point, int value)
         {
-            throw new NotImplementedException();
+
+            (int, int) screenPoint = (0, 0);
+            for (int i = 0; i < screen.GetLength(0); i++)
+                for (int j = 0; j < screen.GetLength(1); j++)
+                {
+                    if (screen[i, j] == value)
+                        screenPoint = (j, i);
+                }
+
+            if (screenPoint == point)
+                throw new ArgumentException("Point cannot be placed in the same x,y co-ordinates as screen point");
+
+            return point switch
+            {
+                var (x, y) when x == screenPoint.Item1 && y > screenPoint.Item2 => Direction8.UP,
+                var (x, y) when x == screenPoint.Item1 && y < screenPoint.Item2 => Direction8.DOWN,
+                var (x, y) when x > screenPoint.Item1 && y == screenPoint.Item2 => Direction8.LEFT,
+                var (x, y) when x < screenPoint.Item1 && y == screenPoint.Item2 => Direction8.RIGHT,
+                var (x, y) when x > screenPoint.Item1 && y > screenPoint.Item2 => Direction8.UP_LEFT,
+                var (x, y) when x > screenPoint.Item1 && y < screenPoint.Item2 => Direction8.DOWN_LEFT,
+                var (x, y) when x < screenPoint.Item1 && y > screenPoint.Item2 => Direction8.UP_RIGHT,
+                var (x, y) when x < screenPoint.Item1 && y < screenPoint.Item2 => Direction8.DOWN_RIGHT
+            };
         }
     }
 
@@ -235,7 +286,29 @@ namespace lab_5
     {
         public static int CarCounter(Car[] cars)
         {
-            throw new NotImplementedException();
+            Dictionary<Car,int> list = new Dictionary<Car, int>();
+            foreach(Car car in cars)
+            {
+                if (list.ContainsKey(car))
+                    list[car]++;
+                else
+                    list.Add(car,1);
+            }
+
+            foreach(var car in list)
+            {
+                Console.WriteLine(car);
+            }
+
+            int commonCount = 0;
+
+            foreach(KeyValuePair<Car,int> car in list)
+            {
+                if (commonCount < car.Value)
+                    commonCount = car.Value;
+            }
+
+            return commonCount;
         }
     }
 
@@ -260,7 +333,48 @@ namespace lab_5
         //posortować
         public static void AssignStudentId(Student[] students)
         {
-            
+            int A = 0;
+            int B = 0;
+            int C = 0;
+            int iterator = 0;
+            char group = 'A';
+
+            Array.Sort(students,(a,b) => a.Group.CompareTo(b.Group));
+
+            for(int i = 0; i < students.Length; i++)
+            {
+
+                switch (students[i].Group)
+                {
+
+                    case 'A':
+                        A++;
+                        iterator = A;
+                        group = 'A';
+                        break;
+                    case 'B':
+                        B++;
+                        iterator = B;
+                        group = 'B';
+                        break;
+                    case 'C':
+                        C++;
+                        iterator = C;
+                        group = 'C';
+                        break;
+                    default:
+                        throw new ArgumentException("Unknown group");
+                        break;
+                }
+
+                students[i] = new Student(students[i].LastName, students[i].FirstName, students[i].Group, Char.ToString(group) + iterator.ToString().PadLeft(3, '0'));
+
+            }
+
+            foreach(Student student in students)
+            {
+                Console.WriteLine(student);
+            }
         }
     }
 }
