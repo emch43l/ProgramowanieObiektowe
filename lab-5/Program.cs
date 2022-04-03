@@ -371,10 +371,6 @@ namespace lab_5
 
             }
 
-            foreach(Student student in students)
-            {
-                Console.WriteLine(student);
-            }
         }
     }
 }
