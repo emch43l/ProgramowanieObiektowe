@@ -35,6 +35,39 @@ namespace lab_6
         }
     }
 
+    class Parking: IEnumerable<string>
+    {
+        private String[] _arr = {null,"GL789",null,"TK37898","KR6782",null,"WR66289",null};
+        public string this[char slot]
+        {
+            get
+            {
+                //test poprawnosci, czy slot jest między 'A' a 'Z'
+                return _arr[slot - 'A'];
+            }
+            set
+            {
+                _arr[slot - 'A'] = value;
+            }
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach(string car in _arr)
+            {
+                if(car != null)
+                {
+                    yield return car;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     class SandwitchEnumerator : IEnumerator<Ingredient>
     {
         private Sandwitch _sandwitch;
@@ -99,6 +132,17 @@ namespace lab_6
             {
                 Console.WriteLine(ingredient);
             }
+
+            Parking parking = new Parking();
+            foreach(string car in parking)
+            {
+                Console.WriteLine(car);
+            }
+            Console.WriteLine(string.Join(", ", parking));
+            Console.WriteLine(string.Join(", ", sandwitch));
+            Console.WriteLine(parking['C']);
+            parking['A'] = "TT23234";
+            Console.WriteLine(string.Join(", ", parking));
         }
     }
 }
