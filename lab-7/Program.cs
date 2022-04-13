@@ -8,10 +8,19 @@ namespace lab_7
         public string Name { get; set; }
         public int Ects { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Student student &&
+                   Name == student.Name &&
+                   Ects == student.Ects;
+        }
+
         public override string ToString()
         {
             return $"{Name} {Ects}";
         }
+
+
 
     }
     class Program
@@ -42,6 +51,10 @@ namespace lab_7
             Console.WriteLine(students.Contains(stu));
             Console.WriteLine(students.Remove(stu));
             Console.WriteLine(students.Contains(stu));
+
+            List<Student> list = (List<Student>)students;
+            for(int i = 0; i < list.Count; i++)
+                Console.WriteLine(list[i]);
         }
     }
 }
