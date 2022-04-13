@@ -86,6 +86,20 @@ namespace lab_7
             phoneBook["karol"] = "432098403";
             foreach (KeyValuePair<string, string> item in phoneBook)
                 Console.WriteLine(item);
+
+            string[] arr = { "ewa", "adam", "ewa", "karol", "ania", "ewa", "adam" };
+            //podaj ile razy wystepuje każde imię w tabeli arr;
+            Dictionary<string, int> pplCount = new Dictionary<string, int>();
+            foreach(string name in arr)
+            {
+                if (pplCount.ContainsKey(name))
+                    pplCount[name]++;
+                else
+                    pplCount[name] = 1;
+            }
+
+            foreach (KeyValuePair<string, int> ppl in pplCount)
+                Console.WriteLine(ppl.Key + " " + ppl.Value);
         }
     }
 }
