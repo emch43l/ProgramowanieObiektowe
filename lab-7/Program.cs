@@ -15,6 +15,11 @@ namespace lab_7
                    Ects == student.Ects;
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Ects);
+        }
+
         public override string ToString()
         {
             return $"{Name} {Ects}";
@@ -41,6 +46,7 @@ namespace lab_7
             students.Add(new Student() { Name = "Karol", Ects = 50 });
             students.Add(new Student() { Name = "Jacek", Ects = 300 });
             students.Add(new Student() { Name = "Karolina", Ects = 150 });
+            students.Add(new Student() { Name = "Karolina", Ects = 150 });
             students.Add(new Student() { Name = "Ewelina", Ects = 170 });
             students.Add(new Student() { Name = "Jakub", Ects = 300 });
             foreach (Student student in students)
@@ -53,8 +59,33 @@ namespace lab_7
             Console.WriteLine(students.Contains(stu));
 
             List<Student> list = (List<Student>)students;
+            list.Insert(1, new Student() { Name = "Ania", Ects = 44 });
+            list.RemoveAt(2);
             for(int i = 0; i < list.Count; i++)
                 Console.WriteLine(list[i]);
+
+            ISet<string> set = new HashSet<string>();
+            Console.WriteLine("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+            set.Add("ewa");
+            set.Add("karol");
+            set.Add("ania");
+            Console.WriteLine(set.Contains("ewa"));
+            Console.WriteLine(set.Remove("ewa"));
+            foreach (string name in set)
+                Console.WriteLine(name);
+            ISet<Student> group = new HashSet<Student>(list);
+            foreach (Student student in group)
+                Console.WriteLine(student);
+            ISet<int> s1 = new HashSet<int>(new int[] { 1, 2, 5, 6, 7 });
+            ISet<int> s2 = new HashSet<int>(new int[] { 4, 7, 9, 8, 3 });
+            s1.IntersectWith(s2);
+            Console.WriteLine(string.Join(",", s1));
+            Dictionary<string, string> phoneBook = new Dictionary<string, string>();
+            phoneBook.Add("Adam", "234875345");
+            phoneBook["ewa"] = "857097245";
+            phoneBook["karol"] = "432098403";
+            foreach (KeyValuePair<string, string> item in phoneBook)
+                Console.WriteLine(item);
         }
     }
 }
