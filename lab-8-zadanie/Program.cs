@@ -268,8 +268,7 @@ class Program
     //jeśli obie części zawierają poprawne dane to predykat zwarac true
     public static List<Person> ProcessPeople(List<String> data)
     {
-        throw new Exception();
-        //return LoadPeople(data, data => IsPhoneNumber().invoke(data.split(" ")[0]) && int.Parse(data.split(" ")[1]) > 0);
+        return LoadPeople(data, data => IsPhoneNumber().Invoke(data.Split(" ")[0]) && int.Parse(data.Split(" ")[1]) > 0);
     }
 
     //Zadanie 9
