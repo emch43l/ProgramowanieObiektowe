@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
 delegate String IntFormatter(int a);
 
@@ -183,7 +184,7 @@ class Program
         return delegate (int value)
         {
             //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-            return string.Format("{0:x}", number)
+            return string.Format("{0:X}", value);
         };
     }
     //Zadanie 2
@@ -217,7 +218,7 @@ class Program
             }
 
             return str;
-        }
+        };
     }
 
     //Zadanie 5
@@ -225,7 +226,7 @@ class Program
     public static Action<string> StringConsumer()
     {
         //usuń zgłoszenie wyjątku i wpisz rozwiązanie
-        return s => string.ToUpper(s);
+        return s => s.ToUpper();
     }
     //Zadanie 6
     //zwroć w metodzie lambdę, która zwraca argument podniesiony do kwadratu
@@ -240,8 +241,8 @@ class Program
     //- każdy znak jest cyfrą
     public static Predicate<string> IsPhoneNumber()
     {
-        int? dec = null;
-        return s => s.Lenght == 9 && int.TryParse(s, out dec) && int.TryParse(s, out dec) > 0;
+        int dec = 0;
+        return s => s.Length == 9 && int.TryParse(s, out dec);
     }
     public static List<Person> LoadPeople(List<String> RawData, Predicate<string> validator)
     {
@@ -267,7 +268,8 @@ class Program
     //jeśli obie części zawierają poprawne dane to predykat zwarac true
     public static List<Person> ProcessPeople(List<String> data)
     {
-        return LoadPeople(data, data => IsPhoneNumber().invoke(data.split(" ")[0]) && int.Parse(data.split(" ")[1]) > 0);
+        throw new Exception();
+        //return LoadPeople(data, data => IsPhoneNumber().invoke(data.split(" ")[0]) && int.Parse(data.split(" ")[1]) > 0);
     }
 
     //Zadanie 9

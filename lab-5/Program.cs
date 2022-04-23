@@ -137,12 +137,12 @@ namespace lab_5
 
             int[,] screen =
             {
+                {1, 0, 0},
                 {0, 0, 0},
-                {0, 0, 0},
-                {0, 0, 1}
+                {0, 0, 0}
             };
 
-            (int, int) point = (0, 0);
+            (int, int) point = (1, 1);
 
             Console.WriteLine(Exercise2.DirectionTo(screen, point, 1));
 
