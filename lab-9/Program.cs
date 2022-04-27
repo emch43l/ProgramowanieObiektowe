@@ -79,7 +79,26 @@ namespace lab_9
             select ((string)word.Key, word.Count())));
 
             String.Join(", ",ints.Where(n => n % 2 != 1).OrderBy(x => x).Select(y => y*y));
+            Console.WriteLine(string.Join(", ", enumerable));
+            students.GroupBy(student => student.@group).Select(gr => (gr.Key, gr.Count()));
+            IOrderedEnumerable<Student> sorted = students.OrderBy(student => student.@name).ThenByDescending(student => student.@ects);
+            Console.WriteLine(string.Join("\n", sorted));
 
+            IOrderedEnumerable<string> sortedStrings = words.OrderBy(word => word.Length).ThenBy(word => word);
+            Console.WriteLine(string.Join("\n", sortedStrings));
+
+            Console.WriteLine(string.Join(", ",Enumerable.Range(0, 10).Where(n => n % 2 == 0).Sum()));
+            Console.WriteLine(string.Join(", ", Enumerable.Range(0, 10).Where(n => n % 2 != 0).Select(n => (int)Math.Pow(n, 2))));
+
+            Student second = students.OrderByDescending(s => s.@ects).ElementAtOrDefault(10);
+            Console.WriteLine(second);
+            Student studentA = students.FirstOrDefault(s => s.@name.StartsWith("A"));
+            Console.WriteLine(studentA);
+
+            Random random = new Random();
+            random.Next(5);
+
+            int[] randInt = Enumerable.Range(0, 99).Select(n => random.Next(10)).ToArray();
 
         }
     }
