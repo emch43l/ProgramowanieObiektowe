@@ -233,7 +233,12 @@ namespace lab_9_zad
         //Zastosuj wyłącznie LINQ i metody Prepend i Append 
         public static IEnumerable<string> Tree(int height)
         {
-            throw new NotImplementedException();
+            string triangleRow = "*";
+            return Enumerable.Range(1,height).Select(c => Enumerable.Range(1, c).Aggregate<int, string>(triangleRow, (first, next) =>
+            {
+                return next == 1 ? triangleRow : first+="*";
+            }));
+
         }
 
         public static int Test(Func<int> testedCode, string message)
