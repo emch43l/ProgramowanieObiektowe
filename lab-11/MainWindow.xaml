@@ -16,6 +16,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox
             PreviewTextInput="NumberValidation"
@@ -24,10 +25,10 @@
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            FontSize="48"
+            FontSize="40"
             TextAlignment="Right"
             VerticalAlignment="Stretch"
-            Padding="0 25"
+            Padding="0 0"
             Margin="10"
             >
             0,00
@@ -38,19 +39,19 @@
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            FontSize="48"
+            FontSize="40"
             TextAlignment="Right"
             VerticalAlignment="Stretch"
-            Padding="0 25"
+            Padding="0 0"
             Margin="10"
             IsEnabled="False"
             >
             0,00
         </TextBox>
         <Button
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.ColumnSpan="3"
-            Margin="10"
+            Margin="10,10,10,10"
             Background="#265"
             Click="CalcResult"
             >
@@ -78,6 +79,35 @@
         </Button>
         <ComboBox FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" x:Name="InputCurrencyCode" Grid.Column="2" HorizontalAlignment="Stretch" Margin="10, 10, 10, 10" VerticalAlignment="Stretch"/>
         <ComboBox FontSize="30" HorizontalContentAlignment="Center" FontWeight="Bold" VerticalContentAlignment="Center" x:Name="OutputCurrencyCode" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10, 10, 10, 10" VerticalAlignment="Stretch"/>
-
+        <Button
+            Grid.Column="0"
+            Grid.Row="3"
+            Margin="10"
+            FontSize="24"
+            Grid.ColumnSpan="1"
+            x:Name="LoadTxtFile" Click="LoadFromTxtFile"
+            >
+            Wczytaj z pliku
+        </Button>
+        <Button
+            Grid.Column="2"
+            Grid.Row="3"
+            Margin="10"
+            FontSize="24"
+            Grid.ColumnSpan="1"
+            x:Name="SaveToFile" Click="SaveToJsonFile"
+            >
+            Zapisz do JSON
+        </Button>
+        <Button
+            Grid.Column="2"
+            Grid.Row="3"
+            Margin="10"
+            FontSize="24"
+            Grid.ColumnSpan="1"
+            x:Name="LoadJSONFile" Click="LoadFromJSONFile"
+            >
+            Odczytaj z JSON
+        </Button>
     </Grid>
 </Window>
